@@ -1,0 +1,56 @@
+.container {
+	display: flex;
+}
+
+.nav {
+	display: flex;
+	width: 100%;
+	height: 5vw;
+	background-color: rgba(223, 255, 238, 0.4);
+	align-items: center;
+	align-content: row;
+	justify-content: space-between;
+
+} 
+.left p{
+	display: flex;
+	font-family: cursive;
+	font-size: 2vw;
+	font-style: bold;
+	margin:2vw;
+}
+
+.left form{
+	display: flex;
+	align-content: row;
+	align-self: center;
+	margin: 2vw;
+}
+
+.search {
+	display: flex;
+	align-self: center;
+	margin-right: 50vw;
+}
+.search form input[type='submit']{
+	background-color: white;
+	font-size: 1vw;
+	height: 2vw;
+	width:5vw;
+	cursor: pointer;
+	border: none;
+}
+
+.search form input[type='text']{
+	height: 2vw;
+	width:15vw;
+	border: none;
+}
+
+.right form input[type='submit']{
+	height: 2vw;
+	width: 10vw;
+	border:none;
+	margin:2vw;
+	background-color: white;
+}

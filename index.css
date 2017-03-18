@@ -1,0 +1,132 @@
+html { 
+  background: url(images/background.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.media {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+.main-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	width :60vw;
+	height: 50vw;
+	margin: 3vw;
+	background-color: rgba(223, 255, 238, 0.4);
+}
+
+.filter-container{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	width: 50vw;
+	height: 10vw;
+	margin:3vw;
+	margin-bottom: 1vw;
+	background-color: black;
+}
+
+.filter-container form{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	width: 50vw;
+	height: 10vw;
+	margin:3vw;
+	margin-bottom: 1vw;
+}
+.webcam {
+	display: flex;
+	align-self: center;
+	justify-content: center;
+	margin: 3vw;
+	
+}
+
+.webcam-action {
+	display: flex;
+	justify-content: center;
+	height: 2vw;
+	margin-top: 2vw;
+	margin-right: 5vw;
+	margin-left: 5vw;
+	margin-bottom: 3vw;
+}
+
+.side-bar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 30vw;
+	height: 50vw;
+	margin: 3vw;
+	background-color: rgba(223, 255, 238, 0.4);
+}
+
+.login-backdrop {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	width :90vw;
+	height: 50vw;
+	margin: 5vw;
+	background-color: rgba(223, 255, 238, 0.4);
+}
+
+.login-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	width: 40vw;
+	height: 30vw;
+	margin-right: 25vw;
+	margin-left: 25vw;
+	margin-top: 10vw;
+	
+}
+
+.login-container form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.login-container form input[type='text'], input[type='password'] {
+	width: 20vw;
+	height: 2vw;
+	margin-left: 10vw;
+	margin-right: 10vw;
+	margin-bottom: 1vw;
+
+}
+
+.login-container form input[type='submit']{
+	display: flex;
+	align-self: center;
+	text-align: center;
+	height: 2vw;
+	margin-left: 10vw;
+	margin-right: 10vw;
+
+}
+
+.p4 {
+	font-size: 2vw;
+}

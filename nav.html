@@ -1,0 +1,29 @@
+<head>
+	<link rel='stylesheet' type='text/css' href='nav.css'/>
+</head>
+<div class='container'>
+	<div class='nav'>
+		<div class='left'>
+			<p id='home' href='index.php'>Camagru</p>
+		</div>
+		<div class='search'>
+			<form  action='#'>
+				<input type='text' name='search' value=''/>
+				<input type='submit' name='submit' value='Search'/>
+			</form>
+		</div>
+		<div class='right'>
+		<?php
+		session_start();
+		if ($_SESSION['loggedIn'] !== '')
+		{
+		?>
+			<form action='' method='post'>
+				<input type='submit' name='submit' value='Log Out'>
+			</form>
+		<?php
+		}
+		?>
+		</div>
+	</div>
+</div>
