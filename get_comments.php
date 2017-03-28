@@ -1,6 +1,8 @@
 <?php
 session_start();
-function get_comments(){
+if ($_POST['submit'] === 'comment_set')
+{
+	$comments = '';
 	if (file_exists('private/image_data'))
 	{
 		$img = unserialize(file_get_contents('private/image_data'));
@@ -8,9 +10,11 @@ function get_comments(){
 		{
 			foreach($img[$_SESSION['name']][$_SESSION['file']]['comments'] as $comment)
 			{
-				echo "<div style='background-color:white; width: 75%;'><em>".$comment['author'].': '.$comment['date']."</em><hr><p style=' margin: 2vw;'><strong>".$comment['content']."</strong></p></div><br>";
+				$comments .= $comment['author'].': '.$comment['date'] .';'.$comment['content']."\n";
+				// echo "<div style='background-color:white; width: 75%;'><em>".$comment['author'].': '.$comment['date']."</em><hr><p style=' margin: 2vw;'><strong>".$comment['content']."</strong></p></div><br>";
 			}
 		}
 	}
+	echo $comments;
 }
 ?>

@@ -10,5 +10,6 @@ if ($_POST['comment'] !== '')
 		'author' => $_SESSION['loggedIn'], 'date' => date('m-d-Y'));
 	@mkdir('private');
 	file_put_contents("private/image_data", serialize($img));
+	echo $_SESSION['loggedIn'].': '.date('m-d-Y').';'.$_POST['comment']."\n";
 }
 ?>

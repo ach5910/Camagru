@@ -45,6 +45,13 @@ body {
 	
 }
 
+.comment-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
 .user-feedback{
 	display: flex;
 	flex-direction: column;
@@ -53,16 +60,17 @@ body {
 	width: inherit;
 }
 
-.side-bar {
+.like-list {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 	overflow: auto;
 	overflow-y: scroll;
 	width: 30vw;
 	height: 50vw;
 	margin: 3vw;
+	padding-top: 5vw;
 	background-color: rgba(223, 255, 238, 0.4);
 }
 

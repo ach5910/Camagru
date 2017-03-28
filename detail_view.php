@@ -35,24 +35,16 @@ if ($_SESSION['img_src'] !== '')
 				echo "<img src='".$_SESSION['img_src']."' style='width: 480px;height: 360px;'>";
 				?>
 			</div>
-			<div class='user-feedback'>Comments
-				<?php
-				include('get_comments.php');
-				get_comments();
-				?>
+			<div class='comment-container'>Comments
+				<div class='user-feedback' id='user-feedback'>
+				</div>
 				<br>
 				<button id="Comment" onclick="makeComment()">Comment</button>
 				<button id="Like" onclick="like()">Like</button>
 				<script type="text/javascript" src='comment.js'></script>
 			</div>
 		</div>
-		<div class='side-bar' id='side-bar'>Likes
-			<?php
-			include('get_like_count.php');
-			include('get_liked_by.php');
-			echo get_like_count();
-			get_liked_by();
-			?>
+		<div class='like-list' id='like-list'>Likes
 		</div>
 	</div>
 </body>
