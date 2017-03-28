@@ -1,5 +1,5 @@
 
-var video, canvas, context, imageData, snap;
+var video, canvas, context, imageData;
 video = document.getElementById("video");
 canvas = document.getElementById("canvas");
 context = canvas.getContext("2d");
@@ -12,7 +12,7 @@ function onLoad(){
 
 
   
-  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia|| navigator.msGetUserMedia || navigator.oGetUserMedia;
   if (navigator.getUserMedia){
     
     function successCallback(stream){
@@ -26,6 +26,7 @@ function onLoad(){
     }
     
     function errorCallback(error){
+      console.log('Error');
     }
     
     navigator.getUserMedia({video: true}, successCallback, errorCallback);
@@ -40,12 +41,30 @@ function tick(){
   requestAnimationFrame(tick);
        if (video.readyState === video.HAVE_ENOUGH_DATA){
     snapshot();
+
   }
 }
 
 function snapshot(){
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
   imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+}
+
+function save(){
+  var dataUrl = canvas.toDataURL();
+  var filterIndex = document.querySelector("input[name=filter]:checked").value;
+    $.ajax({
+      type: 'POST',
+      url: 'camsave.php',
+      data: {
+        imgBase64: dataUrl,
+        filter: filterIndex
+      },
+      success: function(response){
+          console.log(response);
+        }
+    });
+
 }
       
 // window.onload = onLoad;

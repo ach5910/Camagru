@@ -44,7 +44,7 @@ if ($_POST['submit'] === 'OK')
 	<link rel='stylesheet' type='text/css' href='index.css'/>
 </head>
 <body>
-	<object type="text/html" data="nav.html"></object>
+	<?php include'nav.html';?>
 	<div class='login-backdrop'>
 		<div class='login-container'>
 			<?php
