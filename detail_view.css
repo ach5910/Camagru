@@ -14,43 +14,30 @@ body {
 	justify-content: flex-start;
 }
 
-.media {
+.middle {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
 }
-.main-content {
+.image-content {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	width :60vw;
-	height: 50vw;
 	margin: 3vw;
 	background-color: rgba(223, 255, 238, 0.4);
 }
 
-.filter-container{
+.image-data{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	align-content: center;
-	width: 50vw;
-	height: 10vw;
+	width: inherit;
 	margin:3vw;
 	margin-bottom: 1vw;
 }
 
-.filter-container form{
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	align-content: center;
-	width: 50vw;
-	height: 10vw;
-	margin:3vw;
-	margin-bottom: 1vw;
-}
-.webcam {
+.image-src {
 	display: flex;
 	align-self: center;
 	justify-content: center;
@@ -58,14 +45,12 @@ body {
 	
 }
 
-.webcam-action {
+.user-feedback{
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
-	height: 2vw;
-	margin-top: 2vw;
-	margin-right: 5vw;
-	margin-left: 5vw;
-	margin-bottom: 3vw;
+	align-items: center;
+	width: inherit;
 }
 
 .side-bar {

@@ -1,6 +1,7 @@
 .container {
 	display: flex;
 	align-self: flex-start;
+	width: 100%;
 }
 
 .nav {

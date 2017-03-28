@@ -4,7 +4,10 @@ if ($_POST['submit'] === 'Log Out')
 	$_SESSION['loggedIn'] = '';
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] === '')
 	header('Location: login.php');
-
+if ($_POST['submit'] === 'det')
+{
+	$_SESSION['img_src'] = $_POST['img_src'];
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -20,19 +23,19 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] === '')
 			<div class='filter-container'>
 				<form>
 					<div class='filter'>
-						<img style='width: 5vw;height: 4vw;' src="images/Dora.png">
+						<img style='width: 7vw;height: auto;border: solid;' src="images/rainbow.png">
 						<input type='radio' name='filter' value='0' checked>
 					</div>
 					<div class='filter'>
-						<img style='width: 5vw;height: auto;' src="images/Mario.png">
+						<img style='width: 7vw;height: auto;border: solid;' src="images/grass.png">
 						<input type='radio' name='filter' value='1'>
 					</div>
 					<div class='filter'>
-						<img style='width: 5vw;height: auto;' src="images/clouds.png">
+						<img style='width: 7vw;height: auto;border: solid;' src="images/clouds.png">
 						<input type='radio' name='filter' value='2'>
 					</div>
 					<div class='filter'>
-						<img style='width: 5vw;height: auto;' src="images/vines.png">
+						<img style='width: 7vw;height: auto;border: solid;' src="images/vines.png">
 						<input type='radio' name='filter' value='3'>
 					</div>
 				</form>
@@ -46,10 +49,11 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] === '')
                 <button id="snapshot" onclick="takeSnap()">Snapshot</button>
                 <button id="save" onclick="save()">Save</button>
 			</div>
-			<script src="webcam.js"></script>
+			
 		</div>
-		<div class='side-bar'>
+		<div class='side-bar' id='side-bar'>
 		</div>
+		<script src='webcam.js'></script>
 	</div>
 </body>
 </html>

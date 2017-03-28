@@ -1,10 +1,12 @@
 
-var video, canvas, context, imageData;
+var video, canvas, context, imageData, gallery;
 video = document.getElementById("video");
 canvas = document.getElementById("canvas");
 context = canvas.getContext("2d");
 canvas.width = parseInt(canvas.style.width);
 canvas.height = parseInt(canvas.style.height);
+gallery = document.getElementById('side-bar');
+document.body.onload = getGallery;
 function onLoad(){
   
   console.log(canvas.height);
@@ -62,9 +64,63 @@ function save(){
       },
       success: function(response){
           console.log(response);
+          addImage(response);
         }
     });
 
+}
+
+function getGallery(){
+  $.ajax({
+    url: 'update_gallery.php',
+    type: 'post',
+    dataType: 'text',
+    data: {
+      'submit': 'OK'
+    },
+    success: function(response){
+      console.log(response);
+      populateGallery(response);
+    }
+  });
+}
+
+function populateGallery(imgData){
+  if (imgData.length > 0){
+    var imgArray = imgData.split("\n");
+    for (img in imgArray){
+      if (imgArray[img].length > 0)
+        addImage(imgArray[img]);
+    }
+  }
+}
+
+function addImage(img_file){
+  console.log(img_file);
+  var img = document.createElement('img');
+  img.setAttribute('src', img_file);
+  img.addEventListener('click', function(){detailView(this);}, false);
+  img.style.width = 160 + "px";
+  img.style.margin = 5 + "px";
+  gallery.insertBefore(img, gallery.firstChild);
+}
+
+function detailView(img_tag){
+  var src = img_tag.getAttribute("src");
+  $.ajax({
+    url: 'index.php',
+    type: 'post',
+    dataType: 'text',
+    data: {
+      'submit': 'det',
+      'img_src': src
+    },
+    success: function(response){
+      console.log(response);
+      console.log('success');
+      window.location.href='detail_view.php';
+    }
+  });
 }
       
 // window.onload = onLoad;

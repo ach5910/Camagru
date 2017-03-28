@@ -1,4 +1,5 @@
 <?php
+session_start();
 function merge($filename_x, $filename_y, $filename_result) {
 
 	// Get dimensions for specified images
@@ -35,9 +36,30 @@ function merge($filename_x, $filename_y, $filename_result) {
 	return $ret;
 
 }
+function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){ 
+        // creating a cut resource 
+        $cut = imagecreatetruecolor($src_w, $src_h); 
+
+        // copying relevant section from background to the cut resource 
+        imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h); 
+        
+        // copying relevant section from watermark to the cut resource 
+        imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h); 
+        
+        // insert cut resource to destination image 
+        imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
+
+        $timestamp = date('YmdHis');
+        $img_file = './private/user_images/'.$_SESSION['loggedIn'].'/'.$timestamp.'.png';
+        @mkdir('./private/user_images/'.$_SESSION['loggedIn']);
+        imagepng($dst_im, $img_file);
+        imagedestroy($dst_im);
+        imagedestroy($src_im);
+        return $img_file;
+}
 if ($_POST['imgBase64'] !== '' && is_numeric($_POST['filter']))
 {
-	$filterImage = array('./images/Dora.png', 'images/Mario.png', 'images/clouds.png', 'images/vines.png');
+	$filterImage = array('./images/rainbow.png', 'images/grass.png', 'images/clouds.png', 'images/vines.png');
 	$filteredData = explode(',', $_POST['imgBase64']);
 	$unencoded = base64_decode($filteredData[1]);
 	// $randomName = rand(0, 99999);
@@ -61,31 +83,36 @@ if ($_POST['imgBase64'] !== '' && is_numeric($_POST['filter']))
 	// else
 	// 	echo 'Fail';
 	// Create image instances
-	$dest = @imagecreatefrompng($filterImage[$_POST['filter']]);
-	$src = @imagecreatefrompng('imagetaken.png');
-	list($width, $height) = getimagesize('imagetaken.png');
+	$src = @imagecreatefrompng($filterImage[$_POST['filter']]);
+	$dest = @imagecreatefrompng('imagetaken.png');
+	$new_img = imagecopymerge_alpha($dest, $src,  0, 0, 0, 0, 320, 240, 100);
+	echo $new_img;
 
-	if ($dest && $src)
-	{
-		imagealphablending($dest, false);
-		imagesavealpha($dest, true);
-		// Copy and merge
-		imagecopymerge($src,$dest,   0, 0, 0, 0, 320, 240, 100);
+	// list($width, $height) = getimagesize('imagetaken.png');
 
-		// Output and free from memory
-		// header('Content-Type: image/png');
-		imagepng($src, 'merged.png');
+	// if ($dest && $src)
+	// {
+	// 	// imagealphablending($dest, true);
+	// 	// imagesavealpha($src, true);
+	// 	imagealphablending($dest, false);
+	// 	imagesavealpha($dest, true);
+	// 	// Copy and merge
+	// 	imagecopymerge($src, $dest,   0, 0, 0, 0, 320, 240, 0);
 
-		imagedestroy($dest);
-		imagedestroy($src);
-		echo 'Success';
-	}
-	else
-	{
-		if (!$dest)
-			echo 'Fail dest';
-		if (!$src)
-			echo 'Fail src';
-	}
+	// 	// Output and free from memory
+	// 	// header('Content-Type: image/png');
+	// 	imagepng($src, 'merged.png');
+
+	// 	imagedestroy($dest);
+	// 	imagedestroy($src);
+	// 	echo 'Success';
+	// }
+	// else
+	// {
+	// 	if (!$dest)
+	// 		echo 'Fail dest';
+	// 	if (!$src)
+	// 		echo 'Fail src';
+	// }
 } 
 ?>
