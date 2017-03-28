@@ -42,10 +42,18 @@ if ($_SESSION['img_src'] !== '')
 				?>
 				<br>
 				<button id="Comment" onclick="makeComment()">Comment</button>
+				<button id="Like" onclick="like()">Like</button>
 				<script type="text/javascript" src='comment.js'></script>
 			</div>
 		</div>
-		<div class='side-bar' id='side-bar'>Likes</div>
+		<div class='side-bar' id='side-bar'>Likes
+			<?php
+			include('get_like_count.php');
+			include('get_liked_by.php');
+			echo get_like_count();
+			get_liked_by();
+			?>
+		</div>
 	</div>
 </body>
 </html>

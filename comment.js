@@ -5,6 +5,19 @@ function makeComment(){
 	}
 }
 
+function like(){
+	$.ajax({
+		url:'like.php',
+		type: 'post',
+		dataType: 'text',
+		data: {
+			'like': 'like'
+		},
+		success: function(response){
+			console.log(response);
+		}
+	})
+}
 function addComment(comment){
 	$.ajax({
 		url: 'make_comment.php',
