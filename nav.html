@@ -4,16 +4,16 @@
 <div class='container'>
 	<div class='nav'>
 		<div class='left'>
-			<p id='home' href='index.php'>Camagru</p>
-			<p id='gallery'>| Gallery</p>
+			<div class='home' id='home' onclick='redirectHome()' >Camagru</div>
+			<div class='gallery' id='gallery' onclick="redirectGallery()">| Gallery</div>
+			<script src='nav.js'></script>
 		</div>
-		<script src='nav.js'></script>
-		<div class='search'>
+		<!-- <div class='search'>
 			<form  action='#'>
 				<input type='text' name='search' value=''/>
 				<input type='submit' name='submit' value='Search'/>
 			</form>
-		</div>
+		</div> -->
 		<div class='right'>
 		<?php
 		session_start();

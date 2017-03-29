@@ -3,15 +3,16 @@ document.body.onload = init;
 
 function init(){
 	home = getElementById('home');
-	home.addEventListener('click', function(){redirectHome();});
+	// home.addEventListener('click', function(){});
 	gallery = getElementById('gallery');
-	gallery.addEventListener('click', function(){redirectGallery();});
+	// gallery.addEventListener('click', function(){redirectGallery();});
 }
 
 function redirectHome(){
-	location.href = 'index.php';
+	console.log('reHome');
+	window.location.href = 'index.php';
 }
 
 function redirectGallery(){
-	location.href = 'login.php';
+	window.location.href = 'login.php';
 }

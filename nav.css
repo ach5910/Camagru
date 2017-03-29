@@ -14,12 +14,24 @@
 	justify-content: space-between;
 
 } 
-.left p{
+.left {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	padding-left: 2vw;
+}
+.home{
 	display: flex;
 	font-family: cursive;
 	font-size: 2vw;
 	font-style: bold;
-	margin:2vw;
+}
+.gallery{
+	display: flex;
+	font-size: 2vw;
+	font-style: bold;
+	padding-left: 0.5vw;
 }
 
 .left form{
