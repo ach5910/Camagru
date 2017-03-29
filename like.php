@@ -1,12 +1,22 @@
 <?php
 session_start();
+function is_liked_by_user($img){
+	if (array_key_exists($_SESSION['name'], $img) &&
+		array_key_exists($_SESSION['file'], $img[$_SESSION['name']]) &&
+		array_key_exists('like', $img[$_SESSION['name']][$_SESSION['file']]) &&
+		array_key_exists($_SESSION['loggedIn'], $img[$_SESSION['name']][$_SESSION['file']]['like']))
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
 if ($_POST['like'] === 'like')
 {
 	if (file_exists('private/image_data'))
 		$img = unserialize(file_get_contents('private/image_data'));
 	else
 		$img = array();
-	if (array_key_exists($_SESSION['loggedIn'], $img[$_SESSION['name']][$_SESSION['file']]['like'])) 
+	if (is_liked_by_user($img)) 
 	{
 		echo 'if';
 		unset($img[$_SESSION['name']][$_SESSION['file']]['like'][$_SESSION['loggedIn']]);

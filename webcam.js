@@ -52,37 +52,57 @@ function snapshot(){
   imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 }
 
+function loadDoc(url, data, myFunction){
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function(){
+    if (xhr.readyState == 4 && xhr.status == 200){
+      console.log(xhr.responseText);
+      myFunction(xhr.responseText);
+    }
+  };
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.send(data);
+}
+
 function save(){
   var dataUrl = canvas.toDataURL();
   var filterIndex = document.querySelector("input[name=filter]:checked").value;
-    $.ajax({
-      type: 'POST',
-      url: 'camsave.php',
-      data: {
-        imgBase64: dataUrl,
-        filter: filterIndex
-      },
-      success: function(response){
-          console.log(response);
-          addImage(response);
-        }
-    });
+  // console.log(filterIndex);
+  // var data = JSON.stringify({'imgBase64': dataUrl,'filter': filterIndex });
+  // console.log(data);
+  // console.log(data);
+  loadDoc('camsave.php', 'imgBase64=' + encodeURIComponent(dataUrl) + '&filter=' + filterIndex, addImage);
+    // $.ajax({
+    //   type: 'POST',
+    //   url: 'camsave.php',
+    //   data: {
+    //     'imgBase64': dataUrl,
+    //     'filter': filterIndex
+    //   },
+    //   success: function(response){
+
+    //       console.log(response);
+    //       addImage(response);
+    //     }
+    // });
 
 }
 
 function getGallery(){
-  $.ajax({
-    url: 'update_gallery.php',
-    type: 'post',
-    dataType: 'text',
-    data: {
-      'submit': 'OK'
-    },
-    success: function(response){
-      console.log(response);
-      populateGallery(response);
-    }
-  });
+  loadDoc('update_gallery.php', 'submit=OK', populateGallery);
+  // $.ajax({
+  //   url: 'update_gallery.php',
+  //   type: 'post',
+  //   dataType: 'text',
+  //   data: {
+  //     'submit': 'OK'
+  //   },
+  //   success: function(response){
+  //     console.log(response);
+  //     populateGallery(response);
+  //   }
+  // });
 }
 
 function populateGallery(imgData){
@@ -107,20 +127,23 @@ function addImage(img_file){
 
 function detailView(img_tag){
   var src = img_tag.getAttribute("src");
-  $.ajax({
-    url: 'index.php',
-    type: 'post',
-    dataType: 'text',
-    data: {
-      'submit': 'det',
-      'img_src': src
-    },
-    success: function(response){
-      console.log(response);
-      console.log('success');
-      window.location.href='detail_view.php';
-    }
-  });
+  loadDoc('index.php', 'submit=det&img_src=' + encodeURIComponent(src), console.log);
+  window.location.href = 'detail_view.php';
+  // window.location.href = 'detail_view.php';
+  // $.ajax({
+  //   url: 'index.php',
+  //   type: 'post',
+  //   dataType: 'text',
+  //   data: {
+  //     'submit': 'det',
+  //     'img_src': src
+  //   },
+  //   success: function(response){
+  //     console.log(response);
+  //     console.log('success');
+  //     window.location.href='detail_view.php';
+  //   }
+  // });
 }
       
 // window.onload = onLoad;

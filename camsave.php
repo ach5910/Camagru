@@ -114,5 +114,5 @@ if ($_POST['imgBase64'] !== '' && is_numeric($_POST['filter']))
 	// 	if (!$src)
 	// 		echo 'Fail src';
 	// }
-} 
+}
 ?>

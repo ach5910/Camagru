@@ -11,21 +11,35 @@ function initUserFeedback(){
 	
 }
 
+function loadDoc(url, data, myFunction){
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function(){
+    if (xhr.readyState == 4 && xhr.status == 200){
+      console.log(xhr.responseText);
+      myFunction(xhr.responseText);
+    }
+  };
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.send(data);
+}
+
 function getComments(){
-	$.ajax({
-		url:'get_comments.php',
-		type: 'post',
-		dataType: 'text',
-		data: {
-			'submit': 'comment_set'
-		},
-		success: function(response){
-			console.log('parseComments');
-			console.log(response);
-			parseComments(response);
+	loadDoc('get_comments.php', 'submit=comment_set', parseComments);
+	// $.ajax({
+	// 	url:'get_comments.php',
+	// 	type: 'post',
+	// 	dataType: 'text',
+	// 	data: {
+	// 		'submit': 'comment_set'
+	// 	},
+	// 	success: function(response){
+	// 		console.log('parseComments');
+	// 		console.log(response);
+	// 		parseComments(response);
 			
-		}
-	})
+	// 	}
+	// })
 }
 
 function parseComments(comments){
@@ -69,36 +83,40 @@ function makeComment(){
 }
 
 function like(){
-	$.ajax({
-		url:'like.php',
-		type: 'post',
-		dataType: 'text',
-		data: {
-			'like': 'like'
-		},
-		success: function(response){
-			getLikeCount();
-			getLikedBy();
-			console.log(response);
-		}
-	})
+	loadDoc('like.php', 'like=like', console.log);
+	getLikeCount();
+	getLikedBy();
+	// $.ajax({
+	// 	url:'like.php',
+	// 	type: 'post',
+	// 	dataType: 'text',
+	// 	data: {
+	// 		'like': 'like'
+	// 	},
+	// 	success: function(response){
+	// 		getLikeCount();
+	// 		getLikedBy();
+	// 		console.log(response);
+	// 	}
+	// })
 }
 
 function getLikeCount(){
-	$.ajax({
-		url:'get_like_count.php',
-		type: 'post',
-		dataType: 'text',
-		data: {
-			'submit': 'like_count'
-		},
-		success: function(response){
-			console.log('getLikeCount');
-			console.log(response);
-			updateLikeCount(response);
-			console.log(response);
-		}
-	})
+	loadDoc('get_like_count.php', 'submit=like_count', updateLikeCount);
+	// $.ajax({
+	// 	url:'get_like_count.php',
+	// 	type: 'post',
+	// 	dataType: 'text',
+	// 	data: {
+	// 		'submit': 'like_count'
+	// 	},
+	// 	success: function(response){
+	// 		console.log('getLikeCount');
+	// 		console.log(response);
+	// 		updateLikeCount(response);
+	// 		console.log(response);
+	// 	}
+	// })
 }
 
 function updateLikeCount(like_count){
@@ -107,18 +125,19 @@ function updateLikeCount(like_count){
 }
 
 function getLikedBy(){
-	$.ajax({
-		url:'get_liked_by.php',
-		type: 'post',
-		dataType: 'text',
-		data: {
-			'submit': 'liked_by'
-		},
-		success: function(response){
-			parseLikes(response);
-			console.log(response);
-		}
-	})
+	loadDoc('get_liked_by.php', 'submit=liked_by', parseLikes);
+	// $.ajax({
+	// 	url:'get_liked_by.php',
+	// 	type: 'post',
+	// 	dataType: 'text',
+	// 	data: {
+	// 		'submit': 'liked_by'
+	// 	},
+	// 	success: function(response){
+	// 		parseLikes(response);
+	// 		console.log(response);
+	// 	}
+	// })
 }
 
 function parseLikes(liked_by){
@@ -147,16 +166,17 @@ function addLikedByDiv(liked_by){
 }
 
 function addComment(comment){
-	$.ajax({
-		url: 'make_comment.php',
-		type: 'post',
-		dataType: 'text',
-		data: {
-			'comment': comment
-		},
-		success: function(response){
-			parseComments(response);
-			console.log(response);
-		}
-	})
+	loadDoc('make_comment.php', 'comment=' + comment, parseComments);
+	// $.ajax({
+	// 	url: 'make_comment.php',
+	// 	type: 'post',
+	// 	dataType: 'text',
+	// 	data: {
+	// 		'comment': comment
+	// 	},
+	// 	success: function(response){
+	// 		parseComments(response);
+	// 		console.log(response);
+	// 	}
+	// })
 }
