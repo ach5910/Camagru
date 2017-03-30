@@ -23,19 +23,19 @@ if ($_POST['submit'] === 'det')
 			<div class='filter-container'>
 				<form>
 					<div class='filter'>
-						<img style='width: 7vw;height: auto;border: solid;' src="images/rainbow.png">
+						<img style='width: 7vw; min-width: 60px;height: auto;border: solid;' src="images/rainbow.png">
 						<input type='radio' name='filter' value='0' checked>
 					</div>
 					<div class='filter'>
-						<img style='width: 7vw;height: auto;border: solid;' src="images/grass.png">
+						<img style='width: 7vw;min-width: 60px;height: auto;border: solid;' src="images/grass.png">
 						<input type='radio' name='filter' value='1'>
 					</div>
 					<div class='filter'>
-						<img style='width: 7vw;height: auto;border: solid;' src="images/clouds.png">
+						<img style='width: 7vw;min-width: 60px;height: auto;border: solid;' src="images/clouds.png">
 						<input type='radio' name='filter' value='2'>
 					</div>
 					<div class='filter'>
-						<img style='width: 7vw;height: auto;border: solid;' src="images/vines.png">
+						<img style='width: 7vw;min-width: 60px;height: auto;border: solid;' src="images/vines.png">
 						<input type='radio' name='filter' value='3'>
 					</div>
 				</form>

@@ -19,15 +19,18 @@ body {
 	flex-direction: row;
 	justify-content: space-around;
 	height: 75vh;
+	margin-top: 2vw;
 	flex-wrap: wrap;
 }
 .main-content {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	align-items: center;
 	width :60vw;
+	min-width: 320px;
 	height: 100%;
-
+	margin-bottom: 5vw;
 	background-color: rgba(223, 255, 238, 0.4);
 }
 
@@ -36,10 +39,7 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	align-content: center;
-	width: 50vw;
-	height: 10vw;
-	margin:3vw;
-	margin-bottom: 1vw;
+	width: 100%;
 }
 
 .filter-container form{
@@ -47,10 +47,9 @@ body {
 	justify-content: space-around;
 	align-items: center;
 	align-content: center;
-	width: 50vw;
-	height: 10vw;
-	margin:3vw;
-	margin-bottom: 1vw;
+	width: 100%;
+	margin-bottom: 2vh;
+	margin-top: 7vh;
 }
 .webcam {
 	display: flex;
@@ -63,11 +62,11 @@ body {
 .webcam-action {
 	display: flex;
 	justify-content: center;
-	height: 2vw;
-	margin-top: 3vh;
-	margin-right: 5vw;
-	margin-left: 5vw;
-	margin-bottom: 3vh;
+	margin-bottom: 7vh;
+}
+
+.webcam-action button{
+	height: 30px;
 }
 
 .side-bar {
@@ -79,7 +78,7 @@ body {
 	overflow: auto;
 	overflow-y: scroll;
 	width: 30vw;
-	min-width: 120px;
+	min-width: 320px;
 	height: 100%;
 
 	background-color: rgba(223, 255, 238, 0.4);

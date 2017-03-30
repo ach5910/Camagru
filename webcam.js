@@ -124,8 +124,8 @@ function addImage(img_file){
   var img = document.createElement('img');
   img.setAttribute('src', img_file);
   img.addEventListener('click', function(){detailView(this);}, false);
-  img.style.width = 120 + "px";
-  img.style.margin = 5 + "px";
+  img.style.width = 100 + "px";
+  img.style.marginTop = "5px 0px 0px 0px";;
   gallery.insertBefore(img, gallery.firstChild);
 }
 
