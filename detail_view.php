@@ -39,8 +39,15 @@ if ($_SESSION['img_src'] !== '')
 				<div class='user-feedback' id='user-feedback'>
 				</div>
 				<br>
+				<?php
+				if ($_SESSION['loggedIn'])
+				{
+				?>
 				<button id="Comment" onclick="makeComment()">Comment</button>
 				<button id="Like" onclick="like()">Like</button>
+				<?php
+				}
+				?>
 				<script type="text/javascript" src='comment.js'></script>
 			</div>
 		</div>

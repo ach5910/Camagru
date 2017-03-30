@@ -26,41 +26,19 @@
 	font-family: cursive;
 	font-size: 2vw;
 	font-style: bold;
+	cursor: pointer;
 }
 .gallery{
 	display: flex;
 	font-size: 2vw;
 	font-style: bold;
 	padding-left: 0.5vw;
-}
-
-.left form{
-	display: flex;
-	align-content: row;
-	align-self: center;
-	margin: 2vw;
-}
-
-.search {
-	display: flex;
-	align-self: center;
-	margin-right: 50vw;
-}
-.search form input[type='submit']{
-	background-color: white;
-	font-size: 1vw;
-	height: 2vw;
-	width:5vw;
 	cursor: pointer;
-	border: none;
 }
 
-.search form input[type='text']{
-	height: 2vw;
-	width:15vw;
-	border: none;
+.right form{
+	margin: 0;
 }
-
 .right form input[type='submit']{
 	height: 2vw;
 	width: 10vw;

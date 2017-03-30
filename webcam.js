@@ -1,12 +1,16 @@
 
 var video, canvas, context, imageData, gallery;
-video = document.getElementById("video");
-canvas = document.getElementById("canvas");
-context = canvas.getContext("2d");
-canvas.width = parseInt(canvas.style.width);
-canvas.height = parseInt(canvas.style.height);
-gallery = document.getElementById('side-bar');
-document.body.onload = getGallery;
+document.body.onload = init;
+
+function init(){
+  video = document.getElementById("video");
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
+  canvas.width = parseInt(canvas.style.width);
+  canvas.height = parseInt(canvas.style.height);
+  gallery = document.getElementById('side-bar');
+  getGallery();
+}
 function onLoad(){
   
   console.log(canvas.height);
@@ -90,7 +94,7 @@ function save(){
 }
 
 function getGallery(){
-  loadDoc('update_gallery.php', 'submit=OK', populateGallery);
+  loadDoc('update_user_gallery.php', 'submit=OK', populateGallery);
   // $.ajax({
   //   url: 'update_gallery.php',
   //   type: 'post',
@@ -120,7 +124,7 @@ function addImage(img_file){
   var img = document.createElement('img');
   img.setAttribute('src', img_file);
   img.addEventListener('click', function(){detailView(this);}, false);
-  img.style.width = 160 + "px";
+  img.style.width = 120 + "px";
   img.style.margin = 5 + "px";
   gallery.insertBefore(img, gallery.firstChild);
 }

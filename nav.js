@@ -2,9 +2,9 @@ var home, gallery;
 document.body.onload = init;
 
 function init(){
-	home = getElementById('home');
+	home = document.getElementById('home');
 	// home.addEventListener('click', function(){});
-	gallery = getElementById('gallery');
+	gallery = document.getElementById('gallery');
 	// gallery.addEventListener('click', function(){redirectGallery();});
 }
 
@@ -14,5 +14,5 @@ function redirectHome(){
 }
 
 function redirectGallery(){
-	window.location.href = 'login.php';
+	window.location.href = 'gallery.php';
 }
