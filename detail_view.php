@@ -35,7 +35,7 @@ if ($_SESSION['img_src'] !== '')
 				echo "<img src='".$_SESSION['img_src']."' style='width: 480px;height: 360px;'>";
 				?>
 			</div>
-			<div class='comment-container'>Comments
+			<div class='comment-container'>
 				<div class='user-feedback' id='user-feedback'>
 				</div>
 				<br>
@@ -51,7 +51,7 @@ if ($_SESSION['img_src'] !== '')
 				<script type="text/javascript" src='comment.js'></script>
 			</div>
 		</div>
-		<div class='like-list' id='like-list'>Likes
+		<div class='comment-list' id='comment-list'><h2>Comments</h2>
 		</div>
 	</div>
 </body>

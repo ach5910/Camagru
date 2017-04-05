@@ -22,7 +22,7 @@ if ($_POST['submit'] === 'det')
 		</div>
 	
 	<div class='pagify'>
-		<div class='prev' onclick='decrementIndex()'><p>&#9664; PREVIOUS |</p></div>
+		<div class='prev' onclick='decrementIndex()'><p>&#9664; PREVIOUS </p></div>
 		<div class='next' onclick='incrementIndex()'><p>NEXT &#9654;</p></div>
 		<script type="text/javascript" src='gallery.js'></script>
 	</div>

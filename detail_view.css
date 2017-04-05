@@ -17,6 +17,7 @@ body {
 .middle {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	justify-content: space-around;
 }
 .image-content {
@@ -60,7 +61,7 @@ body {
 	width: inherit;
 }
 
-.like-list {
+.comment-list {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -68,7 +69,7 @@ body {
 	overflow: auto;
 	overflow-y: scroll;
 	width: 30vw;
-	height: 50vw;
+	min-width: 370px;
 	margin: 3vw;
 	padding-top: 5vw;
 	background-color: rgba(223, 255, 238, 0.4);

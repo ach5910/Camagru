@@ -2,11 +2,11 @@ var likes, comments;
 document.body.onload = initUserFeedback;
 
 function initUserFeedback(){
-	likes = document.getElementById('like-list');
-	comments = document.getElementById('user-feedback');
+	comments = document.getElementById('comment-list');
+	likes = document.getElementById('user-feedback');
 	getComments();
 	getLikeCount();
-	getLikedBy();
+	// getLikedBy();
 	
 	
 }
@@ -63,7 +63,7 @@ function addCommentDiv(authAndDate, content){
 	var commentPara = document.createElement('p');
 	var commentContext = document.createElement('strong');
 	commentBox.style.backgroundColor = 'white';
-	commentBox.style.width = '75%';
+	commentBox.style.width = '340px';
 	timeStamp.innerHTML = authAndDate;
 	commentContext.innerHTML = content;
 	commentContext.style.margin = "2vw";
@@ -85,7 +85,7 @@ function makeComment(){
 function like(){
 	loadDoc('like.php', 'like=like', console.log);
 	getLikeCount();
-	getLikedBy();
+	// getLikedBy();
 	// $.ajax({
 	// 	url:'like.php',
 	// 	type: 'post',

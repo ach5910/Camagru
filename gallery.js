@@ -67,8 +67,8 @@ function addImage(img_file){
   img.setAttribute('src', img_file);
   img.setAttribute('class', 'user_image');
   img.addEventListener('click', function(){detailView(this);}, false);
-  img.style.width = '160px';
-  img.style.height = '120px';
+  img.style.width = '16vw';
+  img.style.height = '12vh';
   img.style.margin = '2vw';
   gallery.appendChild(img);
 }
