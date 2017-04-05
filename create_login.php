@@ -1,5 +1,7 @@
 <?php
 session_start();
+include 'setup.php';
+include 'database.php';
 function validate_info()
 {
 	$pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
@@ -18,20 +20,31 @@ function validate_info()
 $_SESSION['error'] = '';
 if ($_POST['submit'] === 'OK' && validate_info())
 {
-	if(file_exists("private/passwd"))
-		$accounts = unserialize(file_get_contents("private/passwd"));
-	else
-		$accounts = array();
-	if (!array_key_exists($_POST['login'], $accounts))
+	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
+	if ($db->user_name_avail($_POST['login']))
 	{
-		$accounts[$_POST['login']]['email'] = $_POST['email'];
-		$accounts[$_POST['login']]['passwd'] = hash("whirlpool", $_POST['passwd']);
-		@mkdir("private");
-		file_put_contents("private/passwd", serialize($accounts));
+		$db->create_user($_POST['login'], hash('whirlpool', $_POST['passwd']), $_POST['email']);
 		$_SESSION['loggedIn'] = $_POST['login'];
+		$db = null;
 		header("Location: index.php");
 	}
+	$db = null;
 	$_SESSION['error'] = 'Account name in use';
+
+	// if(file_exists("private/passwd"))
+	// 	$accounts = unserialize(file_get_contents("private/passwd"));
+	// else
+	// 	$accounts = array();
+	// if (!array_key_exists($_POST['login'], $accounts))
+	// {
+	// 	$accounts[$_POST['login']]['email'] = $_POST['email'];
+	// 	$accounts[$_POST['login']]['passwd'] = hash("whirlpool", $_POST['passwd']);
+	// 	@mkdir("private");
+	// 	file_put_contents("private/passwd", serialize($accounts));
+	// 	$_SESSION['loggedIn'] = $_POST['login'];
+	// 	header("Location: index.php");
+	// }
+	// $_SESSION['error'] = 'Account name in use';
 }
 ?>
 <html>

@@ -1,11 +1,13 @@
 <?php
 session_start();
+include 'setup.php';
+include 'database.php';
 $_SESSION['error'] = '';
 $_SESSION['email_message'] = '';
-function send_email($account, $key){
-	$login = $key;
-	$account[$key]['passwd'] = hash("whirlpool", 'temp123');
-	file_put_contents("private/passwd", serialize($account));
+function send_email($login){
+	// $login = $key;
+	// $account[$key]['passwd'] = hash("whirlpool", 'temp123');
+	// file_put_contents("private/passwd", serialize($account));
 	$message = 'Account Login: '.$login.PHP_EOL;
 	$message .='Password: temp123'.PHP_EOL;
 	$subject = 'Account Recovery - Camagru';
@@ -23,20 +25,29 @@ function validate_email(){
 }
 if ($_POST['submit'] === 'OK')
 {
-	if (validate_email() && file_exists("private/passwd"))
+	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
+	if ($res = $db->get_user_by_email())
 	{
-		$account = unserialize(file_get_contents("private/passwd"));
-		foreach($account as $key => $value)
-		{
-			if ($value['email'] === $_POST['email'])
-			{
-				send_email($account, $key);
-				break ;
-			}
-		}	
+		$db->update_password($res['id'], hash("whirlpool", 'temp123'));
+		send_email($res['name']);
 	}
 	else
 		$_SESSION['error'] = 'Invalid Email';
+	
+	// if (validate_email() && file_exists("private/passwd"))
+	// {
+	// 	$account = unserialize(file_get_contents("private/passwd"));
+	// 	foreach($account as $key => $value)
+	// 	{
+	// 		if ($value['email'] === $_POST['email'])
+	// 		{
+	// 			send_email($account, $key);
+	// 			break ;
+	// 		}
+	// 	}	
+	// }
+	// else
+	// 	$_SESSION['error'] = 'Invalid Email';
 }
 ?>
 <html>

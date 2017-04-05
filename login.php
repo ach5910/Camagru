@@ -1,21 +1,28 @@
 <?php
 session_start();
+include 'setup.php';
+include 'database.php';
 $_SESSION['error'] = '';
-function validate_login()
-{
-	if(file_exists("private/passwd"))
-	{
-		$accounts = unserialize(file_get_contents("private/passwd"));
-		if (array_key_exists($_POST['login'], $accounts) && $accounts[$_POST['login']]['passwd'] === hash("whirlpool", $_POST['passwd']))
-		{
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
+
+// function validate_login()
+// {
+// 	if(file_exists("private/passwd"))
+// 	{
+// 		$accounts = unserialize(file_get_contents("private/passwd"));
+// 		if (array_key_exists($_POST['login'], $accounts) && $accounts[$_POST['login']]['passwd'] === hash("whirlpool", $_POST['passwd']))
+// 		{
+// 			return TRUE;
+// 		}
+// 	}
+// 	return FALSE;
+// }
+
 if ($_POST['submit'] === 'OK')
 {
-	if (validate_login())
+	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
+	$is_valid = $db->validate_login($_POST['login'], hash("whirlpool", $_POST['passwd']));
+	$db = null;
+	if ($is_valid)
 	{
 		$_SESSION['loggedIn'] = $_POST['login'];
 		header("Location: index.php");

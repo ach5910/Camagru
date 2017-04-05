@@ -73,7 +73,7 @@ class User {
     }
 }
 
-class Camagru_PDO extends PDO {
+class CamagruPDO extends PDO {
     public function __construct($dsn, $user, $pass) {
         parent::__construct($dsn, $user, $pass);
         try{
@@ -105,6 +105,26 @@ class Camagru_PDO extends PDO {
         }
         return TRUE;
     }
+
+    public function get_user_by_email($email){
+        $stmt = $this->prepare('SELECT * FROM Users WHERE email=?');
+        $stmt->execute([$email]);
+        return $stmt->fetch();
+    }
+    public function update_password($user_id, $password){
+        $stmt = $this->prepare('UPDATE Users SET password=? WHERE id=?');
+        $stmt->execute([$password, $user_id]);
+    }
+    public function validate_login($user_name, $password){
+        $stmt = $this->prepare('SELECT * FROM Users Where name=?');
+        $stmt->execute([$user_name]);
+        if ($res = $stmt->fetch())
+        {
+            if ($res['password'] === $password)
+                return TRUE;
+        }
+        return FALSE;
+    }
     public function create_user($name, $pw, $email){
         $stmt = $this->prepare('INSERT INTO Users (name, password, email) VALUES (?, ?, ?)');
         $stmt->execute([$name, $pw, $email]);
@@ -133,7 +153,6 @@ class Camagru_PDO extends PDO {
     public function add_image($file_name, $path, $user_name){
         $user_id = $this->get_user_id($user_name);
         $stmt = $this->prepare('INSERT INTO Gallery (img_name, img_path, user_id) VALUES (?, ?, ?)');
-        echo 'After insert '.$file_name.' '.$path.' '.$user_id.' '.$user_name."\n";
         $stmt->execute([$file_name, $path, $user_id]);
     }
     public function get_image($filename){
@@ -166,8 +185,15 @@ class Camagru_PDO extends PDO {
         $img_usr_id = $this->get_user_id($usr);
         $auth_id = $this->get_user_id($auth);
         $image_id = $this->get_image_id($fn);
-        $stmt = $this->prepare('INSERT INTO Comments (filename, img_user_id, content, author_id, published) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([$fn, $img_usr_id, $text, $auth_id, $date]);
+        $stmt = $this->prepare('INSERT INTO Comments (file_id, img_user_id, content, author_id, published) VALUES (?, ?, ?, ?, ?)');
+        $stmt->execute([$image_id, $img_usr_id, $text, $auth_id, $date]);
+    }
+    public function add_like($fn, $usr, $auth){
+        $img_usr_id = $this->get_user_id($usr);
+        $auth_id = $this->get_user_id($auth);
+        $image_id = $this->get_image_id($fn);
+        $stmt = $this->prepare('INSERT INTO Likes (file_id, img_user_id, likedby_id) VALUES (?, ?, ?)');
+        $stmt->execute([$image_id, $img_usr_id, $auth_id]);
     }
     public function add_comments_from_csv(){
         if (file_exists('private/image_data'))
@@ -188,10 +214,28 @@ class Camagru_PDO extends PDO {
         
         
     }
+    public function add_likes_from_csv(){
+        
+        if (file_exists('private/image_data'))
+        {
+            $img_data = unserialize(file_get_contents('private/image_data'));
+            foreach ($img_data as $user => $img_array)
+            {
+                foreach ($img_array as $file_name => $like_array)
+                {
+                   foreach ($like_array['like'] as $liked_by)
+                   {
+                        $this->add_like($file_name, $user, $liked_by);
+                   } 
+                }   
+            }
+        }
+              
+    }
     
 }
-printf ("%s %s (%s)\n", $DBDSN, $DBUSER, $DBPASS);
-$mypdo = new Camagru_PDO($DBDSN, $DBUSER, $DBPASS);
+// printf ("%s %s (%s)\n", $DBDSN, $DBUSER, $DBPASS);
+// $mypdo = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
 // $mysqli->add_users_from_csv();
 
 // $mysqli->read_user('Aaron');
@@ -250,7 +294,21 @@ $mypdo = new Camagru_PDO($DBDSN, $DBUSER, $DBPASS);
 // $mypdo->add_image($imagetmp, 'merged.png');
 // echo 'Aarons id = '.$mypdo->get_user_id('Aaron');
 // echo 'blockos id = '.$mypdo->get_user_id('blockco');
-$mypdo->add_comments_from_csv();
+// echo 'what';
+
+// if ($mypdo->validate_login('Aaron', '1f4c694705d4b8a30da09de147e5901b482002030409e183db704d203413545b925e277f7ccb8f6229ba68ad1c18f7d35b50f01c4f52977a0fe70d280b5376fc'))
+//     echo "Cor\n";
+// else
+//     echo "Incor\n";
+// if ($mypdo->validate_login('Aaron', '1f4c694705d4b8a30da09de147e5901b482002030409e183db704d203413545b925e277f7ccb8f6229ba68ad1c18f7d35b50f01c4f52977a0fe70d280b5376f'))
+//     echo "Incor\n";
+// else
+//     echo "Cor\n";
+// if ($mypdo->validate_login('Aron', '1f4c694705d4b8a30da09de147e5901b482002030409e183db704d203413545b925e277f7ccb8f6229ba68ad1c18f7d35b50f01c4f52977a0fe70d280b5376fc'))
+//     echo "Incor\n";
+// else
+//     echo "Cor\n";
+
 // $stmt = $mypdo->prepare('SELECT * FROM Users WHERE name=?');
 // $stmt->execute(['Aaron']);
 // $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
