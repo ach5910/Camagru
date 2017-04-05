@@ -1,5 +1,5 @@
 <?php
-$dbhost = 'localhost:8080/Camagru';
+$dbhost = 'localhost:8080';
 $dbuser = "root";
 $dbpass = "root";
 $con = mysql_connect('localhost', $dbuser, $dbpass);
