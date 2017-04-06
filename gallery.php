@@ -1,9 +1,11 @@
 <?php
 session_start();
+if ($_POST['submit'] === 'Log Out')
+	$_SESSION['loggedIn'] = '';
+if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] === '')
+	header('Location: login.php');
 if ($_POST['submit'] === 'det')
-{
 	$_SESSION['img_src'] = $_POST['img_src'];
-}
 ?>
 <html>
 <head>
