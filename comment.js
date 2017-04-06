@@ -1,12 +1,13 @@
-var likes, comments;
+var likes, comments, likedby;
 document.body.onload = initUserFeedback;
 
 function initUserFeedback(){
 	comments = document.getElementById('comment-list');
 	likes = document.getElementById('user-feedback');
+	likedby = document.getElementById('liked_by');
 	getComments();
 	getLikeCount();
-	// getLikedBy();
+	getLikedBy();
 	
 	
 }
@@ -84,8 +85,9 @@ function makeComment(){
 
 function like(){
 	loadDoc('like.php', 'like=like', console.log);
+	likedby.innerHTML = "";
 	getLikeCount();
-	// getLikedBy();
+	getLikedBy();
 	// $.ajax({
 	// 	url:'like.php',
 	// 	type: 'post',
@@ -157,12 +159,17 @@ function insertAfter(el, referenceNode) {
 }
 
 function addLikedByDiv(liked_by){
-	var likedByUser = document.createElement('div');
-	likedByUser.setAttribute('id', liked_by);
-	likedByUser.innerHTML = liked_by;
-	likedByUser.style.margin = '2vw';
-	console.log(likedByUser);
-	insertAfter(likedByUser, likes.firstChild); 
+	if (likedby.innerHTML.length > 0)
+		likedby.innerHTML = likedby.innerHTML + ", " + liked_by;
+	else
+		likedby.innerHTML = liked_by;
+	// var likedByUser = document.createElement('div');
+	// likedByUser.setAttribute('id', liked_by);
+	// likedByUser.innerHTML = liked_by;
+	// likedByUser.style.margin = '2vw';
+	console.log(likedby.innerHTML);
+	console.log('That was the innerHTML');
+	// insertAfter(likedByUser, likes.firstChild); 
 }
 
 function addComment(comment){

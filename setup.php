@@ -105,7 +105,16 @@ class CamagruPDO extends PDO {
         }
         return TRUE;
     }
-
+    public function get_comment_info_str($file_id){
+        $comment_str = '';
+        $stmt = $this->prepare('SELECT * FROM Comments WHERE file_id=?');
+        $stmt->execute([$file_id]);
+        while ($res = $stmt->fetch()){
+            $comment_str .= $this->get_user_name($res['author_id']).': '.$res['published'].
+            ';'.$res['content']."\n";
+        }
+        return $comment_str;
+    }
     public function get_user_by_email($email){
         $stmt = $this->prepare('SELECT * FROM Users WHERE email=?');
         $stmt->execute([$email]);
@@ -145,6 +154,11 @@ class CamagruPDO extends PDO {
         $stmt->execute([$user_name]);
         return $stmt->fetchColumn();
     }
+    public function get_user_name($id){
+        $stmt = $this->prepare('SELECT name FROM Users WHERE id=?');
+        $stmt->execute([$id]);
+        return $stmt->fetchColumn();
+    }
     public function get_image_id($fn){
         $stmt = $this->prepare('SELECT id FROM Gallery WHERE img_name=?');
         $stmt->execute([$fn]);
@@ -155,11 +169,39 @@ class CamagruPDO extends PDO {
         $stmt = $this->prepare('INSERT INTO Gallery (img_name, img_path, user_id) VALUES (?, ?, ?)');
         $stmt->execute([$file_name, $path, $user_id]);
     }
-    public function get_image($filename){
-        $stmt = $this->prepare('SELECT * FROM Gallery WHERE img_name=?');
-        $stmt->execute([$filename]);
-        $res = $stmt->fetch();
-        return $res['content'];
+    public function get_image_name($file_id){
+        $stmt = $this->prepare('SELECT img_name FROM Gallery WHERE id=?');
+        $stmt->execute([$file_id]);
+        $res = $stmt->fetchColumn();
+        return $res;
+    }
+    public function populate_user_gallery($user_name){
+        $image_array = array();
+        $user_id = $this->get_user_id($user_name);
+        $stmt = $this->prepare('SELECT img_path FROM Gallery WHERE user_id=? ORDER BY img_name DESC');
+        $stmt->execute([$user_id]);
+        while ($res = $stmt->fetchColumn())
+        {
+            $image_array[] = $res."\n";
+        }
+        return $image_array;
+
+    }
+    public function populate_main_gallery(){
+        $image_array = array();
+        $stmt = $this->prepare('SELECT img_path FROM Gallery ORDER BY img_name DESC');
+        $stmt->execute();
+        while ($res = $stmt->fetchColumn())
+        {
+            $image_array[] = $res."\n";
+        }
+        return $image_array;
+
+    }
+    public function get_image_by_path($path){
+        $stmt = $this->prepare('SELECT * FROM Gallery WHERE img_path=?');
+        $stmt->execute([$path]);
+        return $stmt->fetch();
     }
     public function add_images_from_csv(){    
         $users_dir = './private/user_images/';
@@ -194,6 +236,34 @@ class CamagruPDO extends PDO {
         $image_id = $this->get_image_id($fn);
         $stmt = $this->prepare('INSERT INTO Likes (file_id, img_user_id, likedby_id) VALUES (?, ?, ?)');
         $stmt->execute([$image_id, $img_usr_id, $auth_id]);
+    }
+    public function unlike($id){
+        $stmt = $this->prepare('DELETE FROM Likes WHERE id=?');
+        $stmt->execute([$id]);
+    }
+    public function get_like_count($file_id){
+        $stmt = $this->prepare('SELECT COUNT(*) FROM Likes WHERE file_id=?');
+        $stmt->execute([$file_id]);
+        return $stmt->fetchColumn();
+    }
+    public function get_liked_by($file_id){
+        $likedby_str = '';
+        $stmt = $this->prepare('SELECT likedby_id FROM Likes WHERE file_id=?');
+        $stmt->execute([$file_id]);
+        while ($res = $stmt->fetchColumn())
+        {
+            $likedby_str .= $this->get_user_name($res)."\n";
+        }
+        return $likedby_str;
+    }
+    public function toggle_like($file_id, $likeby_name, $user_name){
+        $likeby_id = $this->get_user_id($likeby_name);
+        $stmt = $this->prepare('SELECT id FROM Likes WHERE file_id=? AND likedby_id=?');
+        $stmt->execute([$file_id, $likeby_id]);
+        if ($id = $stmt->fetchColumn())
+            $this->unlike($id);
+        else
+            $this->add_like($this->get_image_name($file_id), $user_name, $likeby_name);
     }
     public function add_comments_from_csv(){
         if (file_exists('private/image_data'))
@@ -236,6 +306,7 @@ class CamagruPDO extends PDO {
 }
 // printf ("%s %s (%s)\n", $DBDSN, $DBUSER, $DBPASS);
 // $mypdo = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
+// echo $mypdo->get_liked_by(19);
 // $mysqli->add_users_from_csv();
 
 // $mysqli->read_user('Aaron');

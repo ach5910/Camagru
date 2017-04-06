@@ -1,10 +1,16 @@
 <?php
 session_start();
+include 'setup.php';
+include 'database.php';
 if ($_SESSION['img_src'] !== '')
 {
-	$img_path = explode('/', $_SESSION['img_src']);
-	$_SESSION['name'] = $img_path[3];
-	$file = $img_path[4];
+	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
+	$img_data = $db->get_image_by_path($_SESSION['img_src']);
+	$_SESSION['user_id'] = $img_data['user_id'];
+	$_SESSION['name'] = $db->get_user_name($img_data['user_id']);
+	$_SESSION['img_id'] = $img_data['id'];
+	$file = $img_data['img_name'];
+	$db = null;
 	$_SESSION['file'] = $file;
 	$y = substr($file, 0, 4);
 	$m = substr($file, 4, 2);
@@ -38,6 +44,7 @@ if ($_SESSION['img_src'] !== '')
 			<div class='comment-container'>
 				<div class='user-feedback' id='user-feedback'>
 				</div>
+				<p id='liked_by'></p>
 				<br>
 				<?php
 				if ($_SESSION['loggedIn'])

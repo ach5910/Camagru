@@ -17,12 +17,12 @@ function send_email($login){
 	else
 		$_SESSION['email_message'] = 'Error Sending Email';
 }
-function validate_email(){
-	$pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
-	if (preg_match('/'.$pattern.'/', $_POST['email']) !== 1)
-		return FALSE;
-	return TRUE;
-}
+// function validate_email(){
+// 	$pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+// 	if (preg_match('/'.$pattern.'/', $_POST['email']) !== 1)
+// 		return FALSE;
+// 	return TRUE;
+// }
 if ($_POST['submit'] === 'OK')
 {
 	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
