@@ -3,9 +3,7 @@ document.body.onload = init;
 
 function init(){
 	home = document.getElementById('home');
-	// home.addEventListener('click', function(){});
 	gallery = document.getElementById('gallery');
-	// gallery.addEventListener('click', function(){redirectGallery();});
 }
 
 function redirectHome(){

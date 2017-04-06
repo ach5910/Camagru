@@ -4,10 +4,8 @@ include 'setup.php';
 include 'database.php';
 $_SESSION['error'] = '';
 $_SESSION['email_message'] = '';
+
 function send_email($login){
-	// $login = $key;
-	// $account[$key]['passwd'] = hash("whirlpool", 'temp123');
-	// file_put_contents("private/passwd", serialize($account));
 	$message = 'Account Login: '.$login.PHP_EOL;
 	$message .='Password: temp123'.PHP_EOL;
 	$subject = 'Account Recovery - Camagru';
@@ -17,12 +15,7 @@ function send_email($login){
 	else
 		$_SESSION['email_message'] = 'Error Sending Email';
 }
-// function validate_email(){
-// 	$pattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
-// 	if (preg_match('/'.$pattern.'/', $_POST['email']) !== 1)
-// 		return FALSE;
-// 	return TRUE;
-// }
+
 if ($_POST['submit'] === 'OK')
 {
 	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
@@ -33,21 +26,6 @@ if ($_POST['submit'] === 'OK')
 	}
 	else
 		$_SESSION['error'] = 'Invalid Email';
-	
-	// if (validate_email() && file_exists("private/passwd"))
-	// {
-	// 	$account = unserialize(file_get_contents("private/passwd"));
-	// 	foreach($account as $key => $value)
-	// 	{
-	// 		if ($value['email'] === $_POST['email'])
-	// 		{
-	// 			send_email($account, $key);
-	// 			break ;
-	// 		}
-	// 	}	
-	// }
-	// else
-	// 	$_SESSION['error'] = 'Invalid Email';
 }
 ?>
 <html>

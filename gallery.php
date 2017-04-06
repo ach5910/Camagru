@@ -12,15 +12,12 @@ if ($_POST['submit'] === 'det')
 </head>
 <body>
 	<?php include'nav.html';?>
-	<!-- <object type="text/html" data="nav.html"></object> -->
-	
 		<div class='main'>
 			<div class='title'><h1> Gallery </h1></div>
 			<div class='main-container' id='main-container'>
 			</div>
 			<script type="text/javascript" src='gallery.js'></script>
 		</div>
-	
 	<div class='pagify'>
 		<div class='prev' onclick='decrementIndex()'><p>&#9664; PREVIOUS </p></div>
 		<div class='next' onclick='incrementIndex()'><p>NEXT &#9654;</p></div>

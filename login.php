@@ -4,19 +4,6 @@ include 'setup.php';
 include 'database.php';
 $_SESSION['error'] = '';
 
-// function validate_login()
-// {
-// 	if(file_exists("private/passwd"))
-// 	{
-// 		$accounts = unserialize(file_get_contents("private/passwd"));
-// 		if (array_key_exists($_POST['login'], $accounts) && $accounts[$_POST['login']]['passwd'] === hash("whirlpool", $_POST['passwd']))
-// 		{
-// 			return TRUE;
-// 		}
-// 	}
-// 	return FALSE;
-// }
-
 if ($_POST['submit'] === 'OK')
 {
 	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
@@ -40,7 +27,6 @@ if ($_POST['submit'] === 'OK')
 </head>
 <body>
 	<?php include'nav.html';?>
-	<!-- <object type="text/html" data="nav.html"></object> -->
 	<div class='media'>
 		<div class='login-backdrop'>
 			<div class='login-container'>

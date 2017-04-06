@@ -37,6 +37,7 @@ function clearImagesFromPage(){
 		gallery.removeChild(gallery.firstChild);
 	}
 }
+
 function decrementIndex(){
 	if (imgIndex - 12 >= 0){
 		imgIndex -= 12;
@@ -77,19 +78,4 @@ function detailView(img_tag){
   var src = img_tag.getAttribute("src");
   loadDoc('gallery.php', 'submit=det&img_src=' + encodeURIComponent(src), console.log);
   window.location.href = 'detail_view.php';
-  // window.location.href = 'detail_view.php';
-  // $.ajax({
-  //   url: 'index.php',
-  //   type: 'post',
-  //   dataType: 'text',
-  //   data: {
-  //     'submit': 'det',
-  //     'img_src': src
-  //   },
-  //   success: function(response){
-  //     console.log(response);
-  //     console.log('success');
-  //     window.location.href='detail_view.php';
-  //   }
-  // });
 }

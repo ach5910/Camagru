@@ -159,6 +159,11 @@ class CamagruPDO extends PDO {
         $stmt->execute([$id]);
         return $stmt->fetchColumn();
     }
+    public function get_user_email($user_id){
+        $stmt = $this->prepare('SELECT email FROM Users WHERE id=?');
+        $stmt->execute([$user_id]);
+        return $stmt->fetchColumn();
+    }
     public function get_image_id($fn){
         $stmt = $this->prepare('SELECT id FROM Gallery WHERE img_name=?');
         $stmt->execute([$fn]);
@@ -256,6 +261,13 @@ class CamagruPDO extends PDO {
         }
         return $likedby_str;
     }
+    public function liked_by_user($file_id, $likeby_name){
+        $likeby_id = $this->get_user_id($likeby_name);
+        $stmt = $this->prepare('SELECT id FROM Likes WHERE file_id=? AND likedby_id=?');
+        $stmt->execute([$file_id, $likeby_id]);
+        return $stmt->fetchColumn();
+    }
+
     public function toggle_like($file_id, $likeby_name, $user_name){
         $likeby_id = $this->get_user_id($likeby_name);
         $stmt = $this->prepare('SELECT id FROM Likes WHERE file_id=? AND likedby_id=?');

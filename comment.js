@@ -8,8 +8,6 @@ function initUserFeedback(){
 	getComments();
 	getLikeCount();
 	getLikedBy();
-	
-	
 }
 
 function loadDoc(url, data, myFunction){
@@ -27,20 +25,6 @@ function loadDoc(url, data, myFunction){
 
 function getComments(){
 	loadDoc('get_comments.php', 'submit=comment_set', parseComments);
-	// $.ajax({
-	// 	url:'get_comments.php',
-	// 	type: 'post',
-	// 	dataType: 'text',
-	// 	data: {
-	// 		'submit': 'comment_set'
-	// 	},
-	// 	success: function(response){
-	// 		console.log('parseComments');
-	// 		console.log(response);
-	// 		parseComments(response);
-			
-	// 	}
-	// })
 }
 
 function parseComments(comments){
@@ -88,37 +72,10 @@ function like(){
 	likedby.innerHTML = "";
 	getLikeCount();
 	getLikedBy();
-	// $.ajax({
-	// 	url:'like.php',
-	// 	type: 'post',
-	// 	dataType: 'text',
-	// 	data: {
-	// 		'like': 'like'
-	// 	},
-	// 	success: function(response){
-	// 		getLikeCount();
-	// 		getLikedBy();
-	// 		console.log(response);
-	// 	}
-	// })
 }
 
 function getLikeCount(){
 	loadDoc('get_like_count.php', 'submit=like_count', updateLikeCount);
-	// $.ajax({
-	// 	url:'get_like_count.php',
-	// 	type: 'post',
-	// 	dataType: 'text',
-	// 	data: {
-	// 		'submit': 'like_count'
-	// 	},
-	// 	success: function(response){
-	// 		console.log('getLikeCount');
-	// 		console.log(response);
-	// 		updateLikeCount(response);
-	// 		console.log(response);
-	// 	}
-	// })
 }
 
 function updateLikeCount(like_count){
@@ -128,18 +85,6 @@ function updateLikeCount(like_count){
 
 function getLikedBy(){
 	loadDoc('get_liked_by.php', 'submit=liked_by', parseLikes);
-	// $.ajax({
-	// 	url:'get_liked_by.php',
-	// 	type: 'post',
-	// 	dataType: 'text',
-	// 	data: {
-	// 		'submit': 'liked_by'
-	// 	},
-	// 	success: function(response){
-	// 		parseLikes(response);
-	// 		console.log(response);
-	// 	}
-	// })
 }
 
 function parseLikes(liked_by){
@@ -163,27 +108,8 @@ function addLikedByDiv(liked_by){
 		likedby.innerHTML = likedby.innerHTML + ", " + liked_by;
 	else
 		likedby.innerHTML = liked_by;
-	// var likedByUser = document.createElement('div');
-	// likedByUser.setAttribute('id', liked_by);
-	// likedByUser.innerHTML = liked_by;
-	// likedByUser.style.margin = '2vw';
-	console.log(likedby.innerHTML);
-	console.log('That was the innerHTML');
-	// insertAfter(likedByUser, likes.firstChild); 
 }
 
 function addComment(comment){
 	loadDoc('make_comment.php', 'comment=' + comment, parseComments);
-	// $.ajax({
-	// 	url: 'make_comment.php',
-	// 	type: 'post',
-	// 	dataType: 'text',
-	// 	data: {
-	// 		'comment': comment
-	// 	},
-	// 	success: function(response){
-	// 		parseComments(response);
-	// 		console.log(response);
-	// 	}
-	// })
 }
