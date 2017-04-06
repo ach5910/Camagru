@@ -69,7 +69,7 @@ function makeComment(){
 
 function like(){
 	loadDoc('like.php', 'like=like', console.log);
-	likedby.innerHTML = "";
+	likedby.textContent = "";
 	getLikeCount();
 	getLikedBy();
 }
@@ -80,7 +80,7 @@ function getLikeCount(){
 
 function updateLikeCount(like_count){
 	console.log(likes);
-	likes.innerHTML = "Likes - " + like_count;
+	likes.textContent = "Likes - " + like_count;
 }
 
 function getLikedBy(){
@@ -104,10 +104,10 @@ function insertAfter(el, referenceNode) {
 }
 
 function addLikedByDiv(liked_by){
-	if (likedby.innerHTML.length > 0)
-		likedby.innerHTML = likedby.innerHTML + ", " + liked_by;
+	if (likedby.textContent.length > 0)
+		likedby.textContent = likedby.textContent + ", " + liked_by;
 	else
-		likedby.innerHTML = liked_by;
+		likedby.textContent = liked_by;
 }
 
 function addComment(comment){

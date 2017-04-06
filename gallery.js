@@ -27,6 +27,8 @@ function loadDoc(url, data, myFunction){
 function incrementIndex(){
 	if (imgIndex + 12 < gallerySize){
 		imgIndex += 12;
+    console.log(imgIndex);
+    console.log(gallerySize);
 		clearImagesFromPage();
 		getGallery();
 	}
@@ -54,7 +56,7 @@ function populateGallery(imgData){
   if (imgData.length > 0){
     var imgArray = imgData.split("\n");
     console.log(imgIndex);
-    gallerySize = imgArray.length;
+    gallerySize = imgArray.length - 1;
     for (img = imgIndex; img < imgIndex + 12 && img < imgArray.length; img++){
       if (imgArray[img].length > 0)
         addImage(imgArray[img]);

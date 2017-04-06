@@ -2,30 +2,23 @@
 session_start();
 include 'setup.php';
 include 'database.php';
+include 'email.php';
 $_SESSION['error'] = '';
 $_SESSION['email_message'] = '';
-
-function send_email($login){
-	$message = 'Account Login: '.$login.PHP_EOL;
-	$message .='Password: temp123'.PHP_EOL;
-	$subject = 'Account Recovery - Camagru';
-	$header = 'From: some@email.com';
-	if (mail($_POST['email'], $subject, $message, $header))
-		$_SESSION['email_message'] = 'Email Sucessfully Sent';
-	else
-		$_SESSION['email_message'] = 'Error Sending Email';
-}
 
 if ($_POST['submit'] === 'OK')
 {
 	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
-	if ($res = $db->get_user_by_email())
+	if ($res = $db->get_user_by_email($_POST['email']))
 	{
-		$db->update_password($res['id'], hash("whirlpool", 'temp123'));
-		send_email($res['name']);
+		$newpw = substr(str_shuffle(str_repeat(
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5);
+		$db->update_password($res['id'], hash("whirlpool", $newpw));
+		send_account_recovery_email($res['name'], $newpw, $_POST['email']);
 	}
 	else
 		$_SESSION['error'] = 'Invalid Email';
+	$db = null;
 }
 ?>
 <html>

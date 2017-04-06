@@ -1,5 +1,5 @@
 <?php
-$DBDSN = 'mysql:host=localhost;dbname=test';
+$DBDSN = 'mysql:host=localhost;dbname=Camagru';
 $DBUSER = "root";
 $DBPASS = "root";
 ?>

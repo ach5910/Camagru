@@ -75,8 +75,9 @@ class User {
 
 class CamagruPDO extends PDO {
     public function __construct($dsn, $user, $pass) {
-        parent::__construct($dsn, $user, $pass);
-        try{
+        
+    try{
+            parent::__construct($dsn, $user, $pass);
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch (PDOException $e){
@@ -139,6 +140,8 @@ class CamagruPDO extends PDO {
         $stmt->execute([$name, $pw, $email]);
     }
     public function add_users_from_csv(){
+        $stmt = $this->prepare('CREATE TABLE Users (id int NOT NULL AUTO_INCREMENT, name varchar(255), password varchar(255), email varchar(255), PRIMARY KEY (id))');
+        $stmt->execute();
         if(file_exists("private/passwd"))
         {
             $accounts = unserialize(file_get_contents("private/passwd"));
@@ -208,7 +211,9 @@ class CamagruPDO extends PDO {
         $stmt->execute([$path]);
         return $stmt->fetch();
     }
-    public function add_images_from_csv(){    
+    public function add_images_from_csv(){
+        $stmt = $this->prepare('CREATE TABLE Gallery (id int NOT NULL AUTO_INCREMENT, img_name varchar(255), img_path varchar(255), user_id int, PRIMARY KEY (id), FOREIGN KEY (user_id) REFERENCES Users(id))');
+        $stmt->execute();    
         $users_dir = './private/user_images/';
         if(file_exists($users_dir))
         {
@@ -278,6 +283,8 @@ class CamagruPDO extends PDO {
             $this->add_like($this->get_image_name($file_id), $user_name, $likeby_name);
     }
     public function add_comments_from_csv(){
+        $stmt = $this->prepare('CREATE TABLE Comments (id int NOT NULL AUTO_INCREMENT, file_id int, img_user_id int, content varchar(255), author_id int, published varchar(255), PRIMARY KEY (id), FOREIGN KEY (img_user_id) REFERENCES Users(id), FOREIGN KEY (file_id) REFERENCES Gallery(id), FOREIGN KEY (author_id) REFERENCES Users(id))');
+        $stmt->execute();
         if (file_exists('private/image_data'))
         {
             $img_data = unserialize(file_get_contents('private/image_data'));
@@ -297,7 +304,8 @@ class CamagruPDO extends PDO {
         
     }
     public function add_likes_from_csv(){
-        
+        $stmt = $this->prepare('CREATE TABLE Likes (id int NOT NULL AUTO_INCREMENT, file_id int, img_user_id int, likedby_id int, PRIMARY KEY (id), FOREIGN KEY (img_user_id) REFERENCES Users(id), FOREIGN KEY (file_id) REFERENCES Gallery(id), FOREIGN KEY (likedby_id) REFERENCES Users(id))');
+        $stmt->execute();
         if (file_exists('private/image_data'))
         {
             $img_data = unserialize(file_get_contents('private/image_data'));
@@ -316,10 +324,20 @@ class CamagruPDO extends PDO {
     }
     
 }
+
+// echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
+// echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
+// echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
+// echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
+// echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
 // printf ("%s %s (%s)\n", $DBDSN, $DBUSER, $DBPASS);
 // $mypdo = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
-// echo $mypdo->get_liked_by(19);
-// $mysqli->add_users_from_csv();
+// $mypdo->add_image('20170406150950.png', './private/user_images/Aaron/20170406150950.png', 'Aaron');
+// // echo $mypdo->get_liked_by(19);
+// $mypdo->add_users_from_csv();
+// $mypdo->add_images_from_csv();
+// $mypdo->add_comments_from_csv();
+// $mypdo->add_likes_from_csv();
 
 // $mysqli->read_user('Aaron');
 // if ($mysqli->user_name_avail('Matt')){
@@ -328,7 +346,10 @@ class CamagruPDO extends PDO {
 // else
 //     echo 'Taken';
 
-
+// CREATE TABLE Users (id int NOT NULL AUTO_INCREMENT, name varchar(255), password varchar(255), email varchar(255), PRIMARY KEY (id));
+// CREATE TABLE Gallery (id int NOT NULL AUTO_INCREMENT, img_name varchar(255), img_path varchar(255), user_id int, PRIMARY KEY (id), FOREIGN KEY (user_id) REFERENCES Users(id));
+// CREATE TABLE Comments (id int NOT NULL AUTO_INCREMENT, file_id int, img_user_id int, content varchar(255), author_id int, published varchar(255), PRIMARY KEY (id), FOREIGN KEY (img_user_id) REFERENCES Users(id), FOREIGN KEY (file_id) REFERENCES Gallery(id), FOREIGN KEY (author_id) REFERENCES Users(id));
+// CREATE TABLE Likes (id int NOT NULL AUTO_INCREMENT, file_id int, img_user_id int, likedby_id int, PRIMARY KEY (id), FOREIGN KEY (img_user_id) REFERENCES Users(id), FOREIGN KEY (file_id) REFERENCES Gallery(id), FOREIGN KEY (likedby_id) REFERENCES Users(id));
 
 /*
  * This is the "official" OO way to do it,

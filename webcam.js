@@ -66,7 +66,11 @@ function loadDoc(url, data, myFunction){
 function save(){
   var dataUrl = canvas.toDataURL();
   var filterIndex = document.querySelector("input[name=filter]:checked").value;
-  loadDoc('camsave.php', 'imgBase64=' + encodeURIComponent(dataUrl) + '&filter=' + filterIndex, addImage);
+  loadDoc('camsave.php', 'imgBase64=' + encodeURIComponent(dataUrl) + '&filter=' + filterIndex, update_db);
+}
+
+function update_db(img_file){
+  loadDoc('image_to_database.php', 'img_path=' + img_file, addImage);
 }
 
 function getGallery(){

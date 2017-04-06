@@ -14,8 +14,8 @@ function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, 
     imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
 
     $timestamp = date('YmdHis');
-    $img_file = './private/user_images/'.$_SESSION['loggedIn'].'/'.$timestamp.'.png';
-    @mkdir('./private/user_images/'.$_SESSION['loggedIn']);
+    $img_file = './private/user_images/'.$_SESSION["loggedIn"].'/'.$timestamp.'.png';
+    @mkdir('./private/user_images/'.$_SESSION["loggedIn"]);
     imagepng($dst_im, $img_file);
     imagedestroy($dst_im);
     imagedestroy($src_im);
