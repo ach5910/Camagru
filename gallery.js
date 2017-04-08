@@ -67,13 +67,44 @@ function populateGallery(imgData){
 function addImage(img_file){
   console.log(img_file);
   var img = document.createElement('img');
+  var card = document.createElement('div');
+  var title = document.createElement('div');
+  var like = document.createElement('div');
+  var he = document.createElement('h2');
+  var s1 = document.createElement('a');
+  var s2 = document.createElement('a');
+  var n1 = document.createElement('span');
+  var n2 = document.createElement('span');
+  var hr = document.createElement('hr');
+  var text = document.createElement('textarea');
+  text.setAttribute('class', 'form-control');
+  text.setAttribute('placeholder', 'Textarea');
+  n1.setAttribute('class','badge');
+  n2.setAttribute('class','badge');
+  n1.textContent = '10';
+  n2.textContent = '25';
+  s1.textContent = 'like';
+  s2.textContent = 'comment';
+  s1.appendChild(n1);
+  s2.appendChild(n2);
+  like.appendChild(s1);
+  like.appendChild(s2);
+  he.textContent = 'author';
+  title.appendChild(he);
+  title.setAttribute('class','car-title');
+  like.setAttribute('class', 'card-like');
+  card.setAttribute('class', 'card');
   img.setAttribute('src', img_file);
   img.setAttribute('class', 'user_image');
   img.addEventListener('click', function(){detailView(this);}, false);
-  img.style.width = '16vw';
-  img.style.height = '12vh';
-  img.style.margin = '2vw';
-  gallery.appendChild(img);
+  img.style.width = '480px';
+  img.style.height = '400px';
+  card.appendChild(title);
+  card.appendChild(img);
+  card.appendChild(like);
+  
+  card.appendChild(text);
+  gallery.appendChild(card);
 }
 
 function detailView(img_tag){

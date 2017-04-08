@@ -2,17 +2,15 @@
 include 'database.php';
 
 function create_db($DBHOST, $DBUSER, $DBPASS, $DBNAME){
-	$link = mysql_connect($DBHOST, $DBUSER, $DBPASS);
+	$link = mysqli_connect($DBHOST, $DBUSER, $DBPASS);
 	if (!$link) {
-	    die('Could not connect: ' . mysql_error());
+	    die('Could not connect: ' . mysqli_error());
 	}
 
 	$sql = 'CREATE DATABASE IF NOT EXISTS '.$DBNAME;
-	if (mysql_query($sql, $link)) {
-	    echo "Database my_db created successfully\n";
+	if (mysqli_query($link, $sql)) {
 	    return (TRUE);
 	}
-    echo 'Error creating database: ' . mysql_error() . "\n";
     return (FALSE);
 }
 ?>

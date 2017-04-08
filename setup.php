@@ -333,18 +333,10 @@ class CamagruPDO extends PDO {
 // echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
 // echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
 // printf ("%s %s (%s)\n", $DBDSN, $DBUSER, $DBPASS);
-echo "here\n";
 if (create_db($DBHOST, $DBUSER, $DBPASS, $DBNAME))
 {
-    echo 'in if';
     restore_db($DBHOST, $DBUSER, $DBPASS, $DBNAME);
 }
-$mypdo = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
-// qu
-if ($mypdo)
-    echo "Yes\n";
-else
-    echo "no\n";
 // $mypdo->query()
 // // $mypdo->add_image('20170406150950.png', './private/user_images/Aaron/20170406150950.png', 'Aaron');
 // // // echo $mypdo->get_liked_by(19);
