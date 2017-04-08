@@ -14,6 +14,7 @@ if ($_POST['submit'] === 'det')
 <html>
 <head>
 	<link rel='stylesheet' type='text/css' href='index.css'/>
+	
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 </head>
 <body>

@@ -1,7 +1,28 @@
 <head>
 	<link rel='stylesheet' type='text/css' href='nav.css'/>
 </head>
-<div class='container'>
+<div class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<div class='home' id='home' onclick='redirectHome()' >Camagru</div>
+			<div class='gallery' id='gallery' onclick="redirectGallery()">| Gallery</div>
+			<script src='nav.js'></script>
+			<?php
+			session_start();
+			if ($_SESSION['loggedIn'])
+			{
+			?>
+				<form action='' method='post'>
+					<input type='submit' name='submit' value='Log Out'>
+				</form>
+			<?php
+			}
+			?>
+		</div>
+	</div>
+</div>
+
+<!-- <div class='container'>
 	<div class='nav'>
 		<div class='left'>
 			<div class='home' id='home' onclick='redirectHome()' >Camagru</div>
@@ -22,4 +43,4 @@
 		?>
 		</div>
 	</div>
-</div>
+</div> -->

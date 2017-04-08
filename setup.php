@@ -1,5 +1,7 @@
 <?php
 include 'database.php';
+include ('create_db.php');
+include ('restore_db.php');
 // $dbhost = 'localhost:8080';
 // $dbuser = "root";
 // $dbpass = "root";
@@ -75,13 +77,13 @@ class User {
 
 class CamagruPDO extends PDO {
     public function __construct($dsn, $user, $pass) {
-        
-    try{
+       try{
             parent::__construct($dsn, $user, $pass);
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         }
         catch (PDOException $e){
-            die($e->getMessage());
+             die($e->getMessage());
         }
     }
     public function read_user($name){
@@ -331,9 +333,21 @@ class CamagruPDO extends PDO {
 // echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
 // echo substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',5)),0,5)."\n";
 // printf ("%s %s (%s)\n", $DBDSN, $DBUSER, $DBPASS);
-// $mypdo = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
-// $mypdo->add_image('20170406150950.png', './private/user_images/Aaron/20170406150950.png', 'Aaron');
-// // echo $mypdo->get_liked_by(19);
+echo "here\n";
+if (create_db($DBHOST, $DBUSER, $DBPASS, $DBNAME))
+{
+    echo 'in if';
+    restore_db($DBHOST, $DBUSER, $DBPASS, $DBNAME);
+}
+$mypdo = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
+// qu
+if ($mypdo)
+    echo "Yes\n";
+else
+    echo "no\n";
+// $mypdo->query()
+// // $mypdo->add_image('20170406150950.png', './private/user_images/Aaron/20170406150950.png', 'Aaron');
+// // // echo $mypdo->get_liked_by(19);
 // $mypdo->add_users_from_csv();
 // $mypdo->add_images_from_csv();
 // $mypdo->add_comments_from_csv();
