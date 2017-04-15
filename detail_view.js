@@ -4,14 +4,7 @@ document.body.onload = init;
 function init(){
 	gallery = document.getElementById('main-container');
 	imgIndex = 0;
-  loadDoc('getPage.php', 'submit=OK', getImageData)
-}
-
-function getImageData(page){
-  if (page === 'Detail')
-    loadDoc('get_image_data.php', 'submit=OK', populateGallery);
-  else
-    loadDoc('update_gallery.php', 'submit=OK', populateGallery);
+	getImage();
 }
 
 function insertAfter(el, referenceNode) {
@@ -73,6 +66,9 @@ function getGallery(){
 	loadDoc('update_gallery.php', 'submit=OK', populateGallery);
 }
 
+function getImage(){
+  loadDoc('get_image_data.php', 'submit=OK', populateGallery);
+}
 function populateGallery(imgData){
   if (imgData.length > 0){
     var imgArray = imgData.split("\n");
@@ -124,7 +120,7 @@ function addImage(img_file, like_count, comment_count, name, id, is_liked){
   // form.appendChild(c_btn);
   var commentBox = document.createElement('div');
   text.setAttribute('class', 'form-control');
-  text.setAttribute('placeholder', 'Add comment..');
+  text.setAttribute('placeholder', 'Add comment...');
   form.appendChild(text);
   form.appendChild(c_btn);
   n1.setAttribute('class','badge');
@@ -187,57 +183,31 @@ function parseComments(comments, image_name){
 }
 
 function toggleLike(card){
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function(){
-    if (xhr.readyState == 4 && xhr.status == 200){
-      if (xhr.responseText !== '')
-      {
-        var id = card.getAttribute('id');
-        loadDoc('like.php', 'like=like&img_id=' + id, console.log);
-        var count = 1;
-        if (card.childNodes[2].getAttribute('id') == "0")
-        {
-          card.childNodes[2].setAttribute('id', '1');
-          card.childNodes[2].innerHTML = "&#x2665;";
-        }
-        else
-        {
-          card.childNodes[2].setAttribute('id', '0');
-          card.childNodes[2].innerHTML = "&#x2661;";
-          count *= -1;
-        }
-        count = parseInt(card.childNodes[3].childNodes[0].childNodes[1].innerHTML) + count;
-        card.childNodes[3].childNodes[0].childNodes[1].innerHTML = count;
-      }
-    }
-  };
-  xhr.open('POST', 'is_logged_in.php', true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.send('submit=OK');
-  
+  loadDoc('like.php', 'like=like', console.log);
+  var count = 1;
+  if (card.childNodes[2].getAttribute('id') == "0")
+  {
+    card.childNodes[2].setAttribute('id', '1');
+    card.childNodes[2].innerHTML = "&#x2665;";
+  }
+  else
+  {
+    card.childNodes[2].setAttribute('id', '0');
+    card.childNodes[2].innerHTML = "&#x2661;";
+    count *= -1;
+  }
+  count = parseInt(card.childNodes[3].childNodes[0].childNodes[1].innerHTML) + count;
+  card.childNodes[3].childNodes[0].childNodes[1].innerHTML = count;
 }
 
 function addComment(card){
-  var xhr = new XMLHttpRequest();
   var count;
   var comment = card.childNodes[5].childNodes[0].value;
-  xhr.onreadystatechange = function(){
-    if (xhr.readyState == 4 && xhr.status == 200){
-      if (xhr.responseText !== '' && comment.length < 140)
-      {
-        
-        card.childNodes[5].childNodes[0].value = '';
-        var image_path = card.childNodes[1].getAttribute('src');
-        count = parseInt(card.childNodes[3].childNodes[1].childNodes[1].innerHTML) + 1;
-        card.childNodes[3].childNodes[1].childNodes[1].innerHTML = count;
-        loadDocImage('make_comment.php', 'comment=' + comment + '&path=' + image_path, parseComments, image_path);
-      }
-    }
-  };
-  xhr.open('POST', 'is_logged_in.php', true);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.send('submit=OK');
-  
+  card.childNodes[5].childNodes[0].value = '';
+  var image_path = card.childNodes[1].getAttribute('src');
+  count = parseInt(card.childNodes[3].childNodes[1].childNodes[1].innerHTML) + 1;
+  card.childNodes[3].childNodes[1].childNodes[1].innerHTML = count;
+  loadDocImage('make_comment.php', 'comment=' + comment + '&path=' + image_path, parseComments, image_path);
 }
 
 function addCommentDiv(auth, content, image_name){
@@ -250,9 +220,8 @@ function addCommentDiv(auth, content, image_name){
   var spaceBreak = document.createElement('br');
   var commentPara = document.createElement('p');
   var commentContext = document.createElement('strong');
-  // commentBox.style.backgroundColor = 'white';
-  // commentBox.style.margin = '2px 15px';
-  // commentBox.setAttribute('class', 'comment-box');
+  commentBox.style.backgroundColor = 'white';
+  commentBox.style.margin = '2px 15px';
   timeStamp.innerHTML = auth + ":   ";
   commentContext.innerHTML =content;
   // commentContext.style.margin = "2vw";
@@ -268,19 +237,6 @@ function addCommentDiv(auth, content, image_name){
   card.insertBefore(commentBox, card.firstChild);
 }
 
-function deleteImage(){
-  var result = confirm('Are you sure you want to delete this image?');
-  if (result == true){
-    loadDoc('delete_image.php', 'submit=delete', console.log);
-    window.location.href = 'index.php';
-  }
-}
 function insertAfter(el, referenceNode) {
     referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
-}
-
-function detailView(img_tag){
-  var src = img_tag.getAttribute("src");
-  loadDoc('gallery.php', 'submit=det&img_src=' + encodeURIComponent(src), console.log);
-  window.location.href = 'detail_view.php';
 }

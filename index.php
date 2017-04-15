@@ -4,6 +4,7 @@ if ($_POST['submit'] === 'Log Out')
 	$_SESSION['loggedIn'] = '';
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] === '')
 	header('Location: login.php');
+$_SESSION['detail'] = FALSE;
 if ($_POST['submit'] === 'det')
 {
 	$_SESSION['img_src'] = $_POST['img_src'];

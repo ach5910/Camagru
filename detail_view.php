@@ -1,7 +1,14 @@
 <?php
 session_start();
-include 'setup.php';
+include ('setup.php');
 include 'database.php';
+if ($_POST['submit'] === 'Log Out')
+{
+	$_SESSION['loggedIn'] = '';
+	$_SESSION['detail'] = FALSE;
+	header('Location: login.php');	
+}
+$_SESSION['detail'] = TRUE;
 if ($_SESSION['img_src'] !== '')
 {
 	$db = new CamagruPDO($DBDSN, $DBUSER, $DBPASS);
@@ -20,46 +27,18 @@ if ($_SESSION['img_src'] !== '')
 ?>
 <html>
 <head>
-	<link rel='stylesheet' type='text/css' href='detail_view.css'/>
-    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	<link rel='stylesheet' type='text/css' href='gallery.css'/>
 </head>
 <body>
 	<?php include'nav.html';?>
-	<div class='middle'>
-		<div class='image-content'>
-			<div class='image-data' >
-				<?php
-				if (isset($_SESSION['name']) && $_SESSION['name'] !== '')
-				{
-					echo "<strong>".$_SESSION['name']."</strong>";
-					echo "<strong>".$_SESSION['date']."</strong>";
-				}
-				?>
+		<div class='main'>
+			<div class='title'><h1> Detail View </h1></div>
+			<div class='main-container' id='main-container'>
 			</div>
-			<div class="image-src">
-				<?php
-				echo "<img src='".$_SESSION['img_src']."' style='width: 480px;height: 360px;'>";
-				?>
-			</div>
-			<div class='comment-container'>
-				<div class='user-feedback' id='user-feedback'>
-				</div>
-				<p id='liked_by'></p>
-				<br>
-				<?php
-				if ($_SESSION['loggedIn'])
-				{
-				?>
-				<button id="Comment" onclick="makeComment()">Comment</button>
-				<button id="Like" onclick="like()">Like</button>
-				<?php
-				}
-				?>
-				<script type="text/javascript" src='comment.js'></script>
-			</div>
+			<button onclick='deleteImage()'>Delete</button>
+			<script type="text/javascript" src='gallery.js'></script>
+
 		</div>
-		<div class='comment-list' id='comment-list'><h2>Comments</h2>
-		</div>
-	</div>
+		<div>Footer</div>
 </body>
 </html>

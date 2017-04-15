@@ -2,9 +2,14 @@
 
 
 body {
+	/*display: flex;
+	flex-direction: column;
+	justify-content: flex-start;*/
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	justify-content: space-between;
+	background-color: #fafafa;
+	margin: 0px;
 }
 
 .media {
@@ -24,7 +29,8 @@ body {
 	min-width: 320px;
 	height: 100%;
 	margin-bottom: 5vw;
-	background-color: rgba(223, 255, 238, 0.4);
+	border: 1px solid #ced0d4;
+	background-color: white;
 }
 
 .filter-container{
@@ -62,6 +68,7 @@ body {
 	height: 30px;
 	border: none;
 	background-color: white;
+	border: 1px solid #ced0d4;
 	margin-right: 2px;
 	margin-left: 2px;
 }
@@ -77,8 +84,8 @@ body {
 	width: 30vw;
 	min-width: 320px;
 	height: 100%;
-
-	background-color: rgba(223, 255, 238, 0.4);
+	border: 1px solid #ced0d4;
+	background-color: white;
 }
 
 .login-backdrop {
@@ -89,7 +96,8 @@ body {
 	width :90vw;
 	height: 75vh;
 	margin: 5vw;
-	background-color: rgba(223, 255, 238, 0.4);
+	border: 1px solid #ced0d4;
+	background-color: white;
 }
 
 .filter {
